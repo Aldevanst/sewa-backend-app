@@ -107,10 +107,10 @@ constructor(@InjectRepository(Admin) private adminRepository: Repository<Admin>)
 
   
   async update(id: number, updateAdminDto: any) {
-    const user = await this.adminRepository.findOneById(id)
-    Object.assign(user,updateAdminDto)
-    await this.adminRepository.save(user)
-    return user
+    const admin = await this.adminRepository.findOneById(id)
+    Object.assign(admin,updateAdminDto)
+    await this.adminRepository.save(admin)
+    return admin
   }
 
   remove(id: number) {

@@ -154,7 +154,7 @@ export class UserService {
  return promisedNumber;
 }
 
-async update(inputId: number, updateUserDto: UpdateUserDto): Promise<CreateUserDto> {
+async update(inputId: number, updateUserDto :any) {
   const existingUser = await this.userRepository.findOne({where: {
     userID: Equal(inputId),
   }});
@@ -162,33 +162,10 @@ async update(inputId: number, updateUserDto: UpdateUserDto): Promise<CreateUserD
   if (!existingUser) {
     throw new Error("User not found");
   }
+  Object.assign(existingUser,updateUserDto)
+  await this.userRepository.save(existingUser)
+  return existingUser
 
-  if (updateUserDto.name) {
-    existingUser.name = updateUserDto.name;
-  }
-
-  if (updateUserDto.email) {
-    existingUser.email = updateUserDto.email;
-  }
-
-  if (updateUserDto.password) {
-    existingUser.password = updateUserDto.password;
-  }
-  if (updateUserDto.phoneNumber) {
-    existingUser.phoneNumber = updateUserDto.phoneNumber;
-  }
-
-  // Simpan perubahan ke dalam basis data
-  const updatedUser = await this.userRepository.save(existingUser);
-
-  // Buat objek DTO untuk hasil pembaruan
-  const updatedUserDto = new CreateUserDto();
-  updatedUserDto.email = updatedUser.email;
-  updatedUserDto.name = updatedUser.name;
-  updatedUserDto.password = updatedUser.password;
-  updatedUserDto.phoneNumber = updatedUser.phoneNumber;
-
-  return updatedUserDto;
 }
 
 async remove(inputId: number): Promise<CreateUserDto> {

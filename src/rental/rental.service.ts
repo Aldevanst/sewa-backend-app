@@ -72,38 +72,15 @@ export class RentalService {
   }
 
   //mencari reservasi menggunakan userId
-  findOneUserId(inputUserId: number): Promise<Rental[]> {
-    const promisedUserId = new Promise<Rental[]> (
-      (resolve, reject) => {   
-        this.rentalRepository.find({
-          where: {
-            userID: Equal(inputUserId),
-          }
-        }).then(resultData => {
-          if (resultData != null) {
-            let allRentalDto = [];
-
-            resultData.forEach(data =>{
-              let rentalDto = new Rental();
-              rentalDto.rentalID = data.rentalID;
-              rentalDto.buildingID = data.buildingID;
-              rentalDto.userID = data.userID;
-              rentalDto.orderDate = data.orderDate;
-              rentalDto.eventDate = data.eventDate;
-
-            allRentalDto.push(rentalDto);
-          })
-
-            
-            resolve(allRentalDto);
-          } else {
-            reject("Failed to Find Rental Id User")
-          }
-        })        
-      }
-    )
-
-    return promisedUserId;
+ async findOneUserId(inputUserId: number): Promise<Rental[]> {
+  const rental = await this.rentalRepository.find({
+    where: {
+      userID: Equal(inputUserId),
+     
+    },
+     relations:['userID','buildingID']
+  });
+    return rental
   }
 
   async findOneByOrderDate(orderDate: string) {
