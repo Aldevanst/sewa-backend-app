@@ -3,9 +3,15 @@ import { AuthService } from './auth.service';
 import { Public } from './public.decorator';
 import { AuthGuard } from 'src/Auth/auth.guard';
 
+
 @Controller('auth')
 export class AuthController {
     constructor (private authService : AuthService){}
+
+    @Get('get')
+    get(){
+      return 'hello'
+    }
 
     @HttpCode(HttpStatus.OK)
     @Public()

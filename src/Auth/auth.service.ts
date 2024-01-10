@@ -31,6 +31,7 @@ export class AuthService {
         //men-generate jwt token dari header.payload."secret(di Auth.module)"
         return {
             access_token: await this.jwtService.signAsync(payload),
+            userID: user.userID
         };
     }
 

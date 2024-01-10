@@ -8,6 +8,7 @@ import { RentalModule } from './rental/rental.module';
 import { Rental } from './rental/entities/rental.entity';
 import { AdminModule } from './admin/admin.module';
 import { Admin } from './admin/entities/admin.entity';
+import { AuthModule } from './Auth/auth.module';
 // import { AuthGuard } from 'src/Auth/auth.guard';
 // import { AuthModule } from './Auth/auth.module';
 // import { APP_GUARD } from '@nestjs/core';
@@ -34,7 +35,7 @@ import { Admin } from './admin/entities/admin.entity';
     BuildingModule,
     RentalModule,
     AdminModule,
-    // AuthModule
+    AuthModule
   ],
   providers: [
     {
